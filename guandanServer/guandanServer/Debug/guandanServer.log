@@ -1,0 +1,38 @@
+﻿生成启动时间为 2016/11/27 16:42:23。
+     1>项目“F:\大状态下协作博弈\多Agent协作研究\guandanServer\guandanServer\guandanServer.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\guandanServer.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         所有输出均为最新。
+         F:\vs2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\guandanServer.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ClientSocket.cpp
+         ClientSocket.cpp
+       ResourceCompile:
+         所有输出均为最新。
+       ManifestResourceCompile:
+         所有输出均为最新。
+       Link:
+         F:\vs2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\大状态下协作博弈\多Agent协作研究\guandanServer\Debug\guandanServer.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\guandanServer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\大状态下协作博弈\多Agent协作研究\guandanServer\Debug\guandanServer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\大状态下协作博弈\多Agent协作研究\guandanServer\Debug\guandanServer.lib" /MACHINE:X86 Debug\guandanServer.res
+         Debug\guandanServer.exe.embed.manifest.res
+         Debug\Card.obj
+         Debug\ClientSocket.obj
+         Debug\Deck.obj
+         Debug\GameLogic.obj
+         Debug\GameState.obj
+         Debug\guandanServer.obj
+         Debug\guandanServerDlg.obj
+         Debug\ServerSocket.obj
+         Debug\stdafx.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\guandanServer.exe.embed.manifest" /manifest Debug\guandanServer.exe.intermediate.manifest F:\vs2010\VC\Include\Manifest\dpiaware.manifest
+         所有输出均为最新。
+       LinkEmbedManifest:
+         所有输出均为最新。
+         guandanServer.vcxproj -> F:\大状态下协作博弈\多Agent协作研究\guandanServer\Debug\guandanServer.exe
+       FinalizeBuildStatus:
+         正在删除文件“Debug\guandanServer.unsuccessfulbuild”。
+         正在对“Debug\guandanServer.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“F:\大状态下协作博弈\多Agent协作研究\guandanServer\guandanServer\guandanServer.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.83
