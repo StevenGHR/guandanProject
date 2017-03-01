@@ -13,13 +13,15 @@ public:
 public:
 	Deck * handcards;
 	Deck * showcards;
+	CString m_strUserName;
 public:
 	virtual void OnReceive(int nErrorCode);
 	BOOL SendMSG(LPSTR lpBuff, int nlen);
 	BOOL LogoIn(LPSTR lpBuff, int nlen);
 	BOOL Ready(LPSTR lpBuff, int nlen);
 	char * Sort(char * lpBuff, int nlen);
-	CString m_strUserName;
+	BOOL SendCards(LPSTR lpBuff, int nlen);
+
 };
 
 

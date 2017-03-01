@@ -19,6 +19,7 @@ public:
 	void UpdateHandcards(CString& strText);
 	void UpdateReady(CString strInfo);
 	void UpdateUserName(CString strInfo,CString myname);
+	void UpdateShowcards(CString strInfo,CString myname);
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
 	
@@ -37,8 +38,17 @@ protected:
 public:
 	afx_msg void OnBnClickedBtnSend();
 	CString m_strSend;
+	CString m_showedcards;
+	CString name_1;
+	CString name_2;
+	CString name_3;
+	CString m_showcards;
+	CString showcards_1;
+	CString showcards_2;
+	CString showcards_3;
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedBtnPlay();
 	afx_msg void OnBnClickedBtnReady();
 	afx_msg void OnLbnSelchange0Handcards();
+
 };

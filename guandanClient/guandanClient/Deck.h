@@ -18,6 +18,8 @@ public:
 	bool push(Card card);
 	bool pop(Card &card);
 	void pop(vector<Card> card);
+	bool contain(Card card);
+	bool contain(vector<Card> card);
 	/*bool shuffle();
 
 	void deal(CClientSocket & p1,CClientSocket & p2,CClientSocket & p3,CClientSocket & p4);*/

@@ -85,6 +85,12 @@ void CClientSocket::OnReceive(int nErrorCode)
 			((CguandanClientDlg*)(AfxGetApp()->GetMainWnd()))->UpdateUserName(str,this->m_strUserName);
 			break;
 		}
+	case MSG_CARDINFO:
+		{
+			CString str(pBuff);
+			((CguandanClientDlg*)(AfxGetApp()->GetMainWnd()))->UpdateShowcards(str,this->m_strUserName);
+			break;
+		}
 	
 	default: break;
 	}
@@ -140,6 +146,27 @@ BOOL CClientSocket::Ready(LPSTR lpBuff, int nlen)
 		return false;
 
 	return TRUE;
+}
+
+BOOL CClientSocket::SendCards(LPSTR lpBuff, int nlen)
+{
+	//生成协议头
+	HEADER head;
+	head.type = MSG_CARDINFO;
+	head.nContentLen = nlen;
+
+	if(Send(&head, sizeof(HEADER))==SOCKET_ERROR)
+	{
+		AfxMessageBox(_T("发送错误！"));
+		return FALSE;
+	};
+	if(Send(lpBuff, nlen)==SOCKET_ERROR)
+	{
+		AfxMessageBox(_T("发送错误！"));
+		return FALSE;
+	};
+	 
+	return  TRUE;
 }
 
 char * CClientSocket::Sort(char * lpBuff, int nlen)

@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "guandanClient.h"
 #include "guandanClientDlg.h"
+#include "Deck.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -60,6 +61,15 @@ void CguandanClientDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_ET_SEND, m_strSend);
+	DDX_Text(pDX, IDC_CardShow, m_showedcards);
+	DDX_Text(pDX, IDC_1_Name, name_1);
+	DDX_Text(pDX, IDC_2_Name, name_2);
+	DDX_Text(pDX, IDC_3_Name, name_3);
+	DDX_Text(pDX, IDC_0_Showcards, m_showcards);
+	DDX_Text(pDX, IDC_1_Showcards, showcards_1);
+	DDX_Text(pDX, IDC_2_Showcards, showcards_2);
+	DDX_Text(pDX, IDC_3_Showcards, showcards_3);
+
 }
 
 BEGIN_MESSAGE_MAP(CguandanClientDlg, CDialogEx)
@@ -151,6 +161,7 @@ void CguandanClientDlg::OnPaint()
 		CDialogEx::OnPaint();
 	}
 }
+
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
@@ -254,7 +265,27 @@ void CguandanClientDlg::UpdateReady(CString strInfo)
 void CguandanClientDlg::OnBnClickedBtnPlay()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	UpdateData();
 
+	char* pBuff = new char[m_showedcards.GetLength()+1];
+	memset(pBuff, 0, m_showedcards.GetLength()+1);
+	//转换为多字节
+	WChar2MByte(m_showedcards.GetBuffer(0), pBuff, m_showedcards.GetLength()+1);
+
+	Deck * show=new Deck;
+	show->convert_to_card(pBuff,m_showedcards.GetLength());
+
+	if(m_showedcards.IsEmpty()||!theApp.GetMainSocket()->handcards->contain(show->cards))
+	{
+		AfxMessageBox(_T("请输入正确的牌！"));
+		return ;
+	}
+	theApp.GetMainSocket()->SendCards(pBuff, m_showedcards.GetLength());
+
+	delete pBuff,show;
+
+	m_showedcards.Empty();
+	UpdateData(0);
 }
 
 
@@ -313,17 +344,17 @@ void CguandanClientDlg::UpdateUserName(CString strInfo,CString myname)
 		{
 		case 1:
 			{
-				((CEdit*)GetDlgItem(IDC_1_Name))->ReplaceSel(strTmp);
+				name_1=strTmp;
 				break;
 			}
 		case 2:
 			{
-				((CEdit*)GetDlgItem(IDC_2_Name))->ReplaceSel(strTmp);
+				name_2=strTmp;
 				break;
 			}
 		case 3:
 			{
-				((CEdit*)GetDlgItem(IDC_3_Name))->ReplaceSel(strTmp);
+				name_3=strTmp;
 				break;
 			}
 
@@ -332,8 +363,46 @@ void CguandanClientDlg::UpdateUserName(CString strInfo,CString myname)
 		}
 		strInfo = strInfo.Right(strInfo.GetLength()-n-1);
 	}
+	UpdateData(0);
 }
 
+void CguandanClientDlg::UpdateShowcards(CString strInfo,CString myname)
+{
+	UpdateData();
+	CString strTmp;
+
+	int n = strInfo.Find('#');
+	strTmp = strInfo.Left(n);
+	strInfo = strInfo.Right(strInfo.GetLength()-n-1);
+	if(myname==strTmp)
+	{
+		m_showcards+=strInfo;
+	}
+	if(name_1==strTmp)
+	{
+		showcards_1+=strInfo;
+	}
+	if(name_2==strTmp)
+	{
+		showcards_2+=strInfo;
+	}
+	if(name_3==strTmp)
+	{
+		showcards_3+=strInfo;
+	}
+	UpdateData(0);
+
+	//更新手牌handcards
+	char * temp=new char[strInfo.GetLength()*2];
+	WChar2MByte(strInfo.GetBuffer(0),temp,strInfo.GetLength()*2);
+	Deck * showtemp=new Deck();
+	showtemp->convert_to_card(temp,strInfo.GetLength());
+	theApp.GetMainSocket()->handcards->pop(showtemp->cards);
+	//显示
+	CString handcards_temp(theApp.GetMainSocket()->handcards->convert_to_Char());
+	UpdateHandcards(handcards_temp);
+	delete temp,showtemp;
+}
 
 void CguandanClientDlg::OnLbnSelchange0Handcards()
 {

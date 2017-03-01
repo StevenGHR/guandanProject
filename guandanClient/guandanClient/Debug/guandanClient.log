@@ -1,11 +1,11 @@
-﻿生成启动时间为 2016/11/27 15:18:25。
+﻿生成启动时间为 2017/1/16 14:08:21。
      1>项目“F:\大状态下协作博弈\多Agent协作研究\guandanClient\guandanClient\guandanClient.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\guandanClient.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
          所有输出均为最新。
-         F:\vs2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\guandanClient.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt guandanClientDlg.cpp
-         guandanClientDlg.cpp
+         F:\vs2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\guandanClient.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Deck.cpp
+         Deck.cpp
        ResourceCompile:
          所有输出均为最新。
        ManifestResourceCompile:
@@ -33,4 +33,4 @@
 
 生成成功。
 
-已用时间 00:00:00.71
+已用时间 00:00:13.38

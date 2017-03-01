@@ -69,16 +69,64 @@ bool Deck::pop(Card &card)
 
 void Deck::pop(vector<Card> card)
 {
-	for (vector<Card>::iterator it=card.begin();it!=card.end();++it)
+	for (vector<Card>::iterator it=card.begin();it!=card.end();it++)
 	{
-		for (vector<Card>::iterator hand=cards.begin();hand!=cards.end();++hand)
+		for (vector<Card>::iterator hand=cards.begin();hand!=cards.end();)
 		{
 			if (*it==(*hand)&&(*it).getSuit()==(*hand).getSuit())
 			{
-				cards.erase(hand);
+				hand=cards.erase(hand);
+				break;
 			}
+			else
+				hand++;
 		}
 	}
+}
+
+bool Deck::contain(Card card)
+{
+	bool flag=false;
+	for (vector<Card>::iterator it=cards.begin();it!=cards.end();++it)
+	{
+		if(*it==card)
+		{
+			flag=true;
+			break;
+		}
+	}
+	return flag;
+}
+
+bool Deck::contain(vector<Card> card)
+{
+	bool flag[6]={false};//number of showcards between 1 and 6
+	vector<Card> temp;
+	int count=0;
+	for(unsigned int i=0;i<cards.size();i++)
+	{
+		temp.push_back(cards[i]);
+	}
+	for (vector<Card>::iterator it=card.begin();it!=card.end();it++)
+	{
+		for (vector<Card>::iterator ha=temp.begin();ha!=temp.end();)
+		{
+			if(*it==*ha)
+			{
+				flag[count++]=true;
+				ha=temp.erase(ha);
+				break;
+			}
+			else
+				ha++;
+		}
+	}
+	for(unsigned int i=0;i<card.size();i++)
+	{
+		if(!flag[i])
+			return false;
+	}
+	return true;
 }
 
 //bool Deck::shuffle()
@@ -105,7 +153,7 @@ int Deck::get_cards_length()
 }
 char * Deck::convert_to_Char()
 {
-	int i,j;
+	unsigned int i,j;
 	int n=sizeof(cards)/sizeof(char);
 	char * cardchar =new char[get_cards_length()+1];
 	memset(cardchar,0,get_cards_length());
