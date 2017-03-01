@@ -53,14 +53,16 @@ bool Deck::pop(Card &card)
 
 void Deck::pop(vector<Card> card)
 {
-	for (vector<Card>::iterator it=card.begin();it!=card.end();++it)
+	for (vector<Card>::iterator it=card.begin();it!=card.end();it++)
 	{
-		for (vector<Card>::iterator hand=cards.begin();hand!=cards.end();++hand)
+		for (vector<Card>::iterator hand=cards.begin();hand!=cards.end();)
 		{
 			if (*it==(*hand)&&(*it).getSuit()==(*hand).getSuit())
 			{
-				cards.erase(hand);
+				hand=cards.erase(hand);
 			}
+			else
+				hand++;
 		}
 	}
 }
@@ -89,7 +91,7 @@ int Deck::get_cards_length()
 }
 char * Deck::convert_to_Char()
 {
-	int i,j;
+	unsigned int i,j;
 	int n=sizeof(cards)/sizeof(char);
 	char * cardchar =new char[get_cards_length()+1];
 	memset(cardchar,0,get_cards_length());

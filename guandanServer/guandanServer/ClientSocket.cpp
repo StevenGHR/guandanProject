@@ -13,6 +13,7 @@ CClientSocket::CClientSocket(CPtrList* pList)
 	m_ready=false;
 	handcards=new Deck[HandcardsNumber];
 	showcards=new Deck[HandcardsNumber];
+	gamelogic=new GameLogic();
 }
 
 CClientSocket::~CClientSocket()
@@ -230,24 +231,27 @@ void CClientSocket::OnReady()
 	{
 		Deal();
 	}
-	CString strTime = this->m_strName + _T("  is  Ready! \r\n");
-	//记录日志
-	((CguandanServerDlg*)theApp.GetMainWnd())->DisplayLog(strTime);
-
-	CString strUserInfo = _T("");
-	ps = m_pList->GetHeadPosition();
-
-	while(ps!=NULL)
+	else
 	{
-		CClientSocket* pTemp = (CClientSocket*)m_pList->GetNext(ps);
-		if(pTemp->m_ready&&pTemp->player_number!=this->player_number)
+		CString strTime = this->m_strName + _T("  is  Ready! \r\n");
+		//记录日志
+		((CguandanServerDlg*)theApp.GetMainWnd())->DisplayLog(strTime);
+
+		CString strUserInfo = _T("");
+		ps = m_pList->GetHeadPosition();
+
+		while(ps!=NULL)
 		{
-			strUserInfo+=pTemp->m_strName + _T("  is  Ready!")+_T("# \n");
+			CClientSocket* pTemp = (CClientSocket*)m_pList->GetNext(ps);
+			if(pTemp->m_ready&&pTemp->player_number!=this->player_number)
+			{
+				strUserInfo+=pTemp->m_strName + _T("  is  Ready!")+_T("# \n");
+			}
 		}
+		strUserInfo+=strTime+ _T("#");
+		//更新在线所有客服端
+		this->UpdateAllUser(strUserInfo,_T("Ready"));
 	}
-	strUserInfo+=strTime+ _T("#");
-	//更新在线所有客服端
-	this->UpdateAllUser(strUserInfo,_T("Ready"));
 }
 
 void CClientSocket::Deal()
@@ -342,7 +346,7 @@ void CClientSocket::JudgeShowCards(char * buff,int nlen)
 		player[i] = (CClientSocket*)m_pList->GetNext(ps);
 	}
 	bool actionflag=true;
-	for (int i=player_number;i!=player_number;i--)
+	for (int i=player_number,count=0;count<4;i--,count++)
 	{
 		if (i<0)
 		{
@@ -371,16 +375,24 @@ void CClientSocket::Playcards(Deck * scards)
 	handcards->pop(scards->cards);
 	action=CClientSocket::Hand;
 	//
+	CString cardtemp(scards->convert_to_Char());
+	char * pSend;
+
 	HEADER head;
 	head.type=MSG_CARDINFO;
-	head.nContentLen=scards->get_cards_length();
-	//head.number=player_number;
+
 	POSITION ps = m_pList->GetHeadPosition();
+	cardtemp=this->m_strName+_T("#")+cardtemp;
+	head.nContentLen=cardtemp.GetLength()*2;
+	pSend=new char[head.nContentLen];
+	memset(pSend,0,head.nContentLen);
+	WChar2MByte(cardtemp.GetBuffer(0),pSend,head.nContentLen);
+
 	while(ps!=NULL)
 	{
 		CClientSocket* pTemp = (CClientSocket*)m_pList->GetNext(ps);
 		pTemp->Send((char*)&head, sizeof(head));
-		pTemp->Send(scards->convert_to_Char(),head.nContentLen);
+		pTemp->Send(pSend,head.nContentLen);
 	}
 
 	//下家出

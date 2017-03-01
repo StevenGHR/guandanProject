@@ -337,7 +337,7 @@ bool GameLogic::GetCardInfo(const Deck * deck)
 	}
 	if (IsPair(deck))
 	{
-		ranking=GameLogic::SingleCard;
+		ranking=GameLogic::Pair;
 		maxcard=deck->cards[0].getFace();
 		return true;
 	}
